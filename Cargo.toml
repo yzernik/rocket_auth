@@ -39,7 +39,7 @@ rocket-sessions = "0.0.1"
 
 
 [dependencies.sqlx]
-version = "0.5.5"
+version = "0.6.0"
 optional = true
 
 
@@ -89,7 +89,7 @@ features = ["tera"]
 
 
 [dev-dependencies.sqlx]
-version = "0.5.5"
+version = "0.6.0"
 features = ["runtime-tokio-rustls"]
 
 [dev-dependencies.rocket_auth]
