@@ -39,7 +39,7 @@ rocket-sessions = "0.0.1"
 
 
 [dependencies.sqlx]
-version = "0.6.0"
+version = "0.6"
 optional = true
 
 
