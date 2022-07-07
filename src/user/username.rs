@@ -2,8 +2,7 @@ use lazy_static::lazy_static;
 use regex::Regex;
 use std::borrow::Cow;
 
-use validator::{HasLen, Validate, ValidateArgs, ValidationError};
-// use validator::{validation::ip::validate_ip, HasLen};
+use validator::HasLen;
 
 lazy_static! {
     // Regex from the specs
