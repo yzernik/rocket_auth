@@ -2,6 +2,7 @@ use super::auth::Auth;
 use super::rand_string;
 
 use crate::prelude::*;
+use crate::user::username::validate_username;
 use rocket::http::Status;
 use rocket::request::{FromRequest, Outcome, Request};
 
@@ -12,7 +13,7 @@ impl User {
     /// In case the user is authenticated,
     /// you can change it more easily with [`change_password`](`super::auth::Auth::change_password`).
     /// This function will fail in case the password is not secure enough.
-    /// 
+    ///
     /// ```rust
     /// # use rocket::{State, post};
     /// # use rocket_auth::{Error, Users};
@@ -76,7 +77,7 @@ impl User {
     /// ```
     #[throws(Error)]
     pub fn set_email(&mut self, email: &str) {
-        if validator::validate_email(email) {
+        if validate_username(email) {
             self.email = email.to_lowercase();
         } else {
             throw!(Error::InvalidEmailAddressError)

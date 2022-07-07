@@ -1,4 +1,5 @@
 use crate::prelude::*;
+use crate::user::username::validate_username;
 use rocket::http::Status;
 use rocket::http::{Cookie, CookieJar};
 use rocket::request::FromRequest;
@@ -275,7 +276,7 @@ impl<'a> Auth<'a> {
     #[throws(Error)]
     pub async fn change_email(&self, email: String) {
         if self.is_auth() {
-            if !validator::validate_email(&email) {
+            if !validate_username(&email) {
                 throw!(Error::InvalidEmailAddressError)
             }
             let session = self.get_session()?;
