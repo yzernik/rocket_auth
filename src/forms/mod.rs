@@ -1,10 +1,10 @@
 use crate::prelude::*;
-
+use crate::username::validate_username;
 
 /// The `Login` form is used along with the [`Auth`] guard to authenticate users.
 #[derive(FromForm, Deserialize, Clone, Hash, PartialEq, Eq, Validate)]
 pub struct Login {
-    #[validate(email)]
+    #[validate(custom = "check_username")]
     pub email: String,
     pub(crate) password: String,
 }
@@ -12,7 +12,7 @@ pub struct Login {
 /// The `Signup` form is used along with the [`Auth`] guard to create new users.
 #[derive(FromForm, Deserialize, Clone, PartialEq, Eq, Hash, Validate)]
 pub struct Signup {
-    #[validate(email)]
+    #[validate(custom = "check_username")]
     pub email: String,
     #[validate(
         custom = "is_long",
@@ -120,4 +120,10 @@ fn has_number(password: &str) {
         "The password has to contain at least one digit.\n"
     ))
     // throw!(Error::UnsafePasswordHasNoDigit)
+}
+#[throws(ValidationError)]
+fn check_username(username: &str) {
+    if !validate_username(username) {
+        throw!(ValidationError::new("Invalid username.\n"));
+    }
 }

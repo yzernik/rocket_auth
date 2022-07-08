@@ -2,7 +2,7 @@ use super::auth::Auth;
 use super::rand_string;
 
 use crate::prelude::*;
-use crate::user::username::validate_username;
+use crate::username::validate_username;
 use rocket::http::Status;
 use rocket::request::{FromRequest, Outcome, Request};
 

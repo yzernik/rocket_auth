@@ -1,5 +1,5 @@
 use crate::prelude::*;
-use crate::user::username::validate_username;
+use crate::username::validate_username;
 use rocket::http::Status;
 use rocket::http::{Cookie, CookieJar};
 use rocket::request::FromRequest;

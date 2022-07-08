@@ -134,7 +134,6 @@
 //! }
 //! ```
 
-
 mod cookies;
 mod db;
 mod error;
@@ -142,6 +141,7 @@ mod forms;
 pub mod prelude;
 mod session;
 mod user;
+mod username;
 
 #[cfg(test)]
 mod tests;
