@@ -170,10 +170,10 @@ pub use error::Error;
 #[derive(Serialize, Deserialize, PartialEq, Eq, Clone, Hash, PartialOrd, Ord)]
 pub struct User {
     pub id: i32,
-    email: String,
+    pub email: String,
     pub is_admin: bool,
     #[serde(skip_serializing)]
-    password: String,
+    pub password: String,
 }
 
 /// The [`AdminUser`] guard can be used analogously to [`User`].
