@@ -40,6 +40,6 @@ impl<'r> FromRequest<'r> for Session {
 }
 #[throws(as Option)]
 fn get_session(cookies: &CookieJar) -> Session {
-    let session = cookies.get_private("rocket_auth")?;
+    let session = cookies.get_private("rocket_username_auth")?;
     from_str(session.value()).ok()?
 }

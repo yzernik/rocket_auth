@@ -15,7 +15,7 @@ use std::time::Duration;
 /// ```rust,no_run
 ///
 /// use rocket::{*, form::Form};
-/// use rocket_auth::{Users, Error, Auth, Signup, Login};
+/// use rocket_username_auth::{Users, Error, Auth, Signup, Login};
 ///
 /// #[post("/signup", data="<form>")]
 /// async fn signup(form: Form<Signup>, auth: Auth<'_>) {
@@ -82,7 +82,7 @@ impl<'a> Auth<'a> {
     /// For a custom expiration date use [`Auth::login_for`].
     /// ```rust
     /// # use rocket::{get, post, form::Form};
-    /// # use rocket_auth::{Auth, Login};
+    /// # use rocket_username_auth::{Auth, Login};
     /// #[post("/login", data="<form>")]
     /// fn login(form: Form<Login>, auth: Auth) {
     ///     auth.login(&form);
@@ -99,13 +99,13 @@ impl<'a> Auth<'a> {
             time_stamp: now(),
         };
         let to_str = format!("{}", json!(session));
-        self.cookies.add_private(Cookie::new("rocket_auth", to_str));
+        self.cookies.add_private(Cookie::new("rocket_username_auth", to_str));
     }
 
     /// Logs a user in for the specified period of time.
     /// ```rust
     /// # use rocket::{post, form::Form};
-    /// # use rocket_auth::{Login, Auth};
+    /// # use rocket_username_auth::{Login, Auth};
     /// # use std::time::Duration;
     /// #[post("/login", data="<form>")]
     /// fn login(form: Form<Login>, auth: Auth) {
@@ -125,7 +125,7 @@ impl<'a> Auth<'a> {
             time_stamp: now(),
         };
         let to_str = format!("{}", json!(session));
-        let cookie = Cookie::new("rocket_auth", to_str);
+        let cookie = Cookie::new("rocket_username_auth", to_str);
         self.cookies.add_private(cookie);
     }
 
@@ -133,7 +133,7 @@ impl<'a> Auth<'a> {
     /// In order to authenticate the user, cast the signup form to a login form or use `signup_for`.
     /// ```rust
     /// # use rocket::{post, form::Form};
-    /// # use rocket_auth::{Auth, Signup, Error};
+    /// # use rocket_username_auth::{Auth, Signup, Error};
     /// # use std::time::Duration;
     /// #[post("/signup", data="<form>")]
     /// async fn signup(form: Form<Signup>, auth: Auth<'_>) -> Result<&'static str, Error>{
@@ -151,7 +151,7 @@ impl<'a> Auth<'a> {
     /// The session will last the specified period of time.
     /// ```rust
     /// # use rocket::{post, form::Form};
-    /// # use rocket_auth::{Auth, Signup};
+    /// # use rocket_username_auth::{Auth, Signup};
     /// # use std::time::Duration;
     /// #[post("/signup", data="<form>")]
     /// fn signup_for(form: Form<Signup>, auth: Auth) {
@@ -170,7 +170,7 @@ impl<'a> Auth<'a> {
     /// It allows to know if the current client is authenticated or not.
     /// ```rust
     /// # use rocket::{get};
-    /// # use rocket_auth::{Auth};
+    /// # use rocket_username_auth::{Auth};
     /// #[get("/am-I-authenticated")]
     /// fn is_auth(auth: Auth<'_>) -> &'static str {
     ///     if auth.is_auth() {
@@ -192,7 +192,7 @@ impl<'a> Auth<'a> {
     /// It retrieves the current logged user.  
     /// ```
     /// # use rocket::get;
-    /// # use rocket_auth::Auth;
+    /// # use rocket_username_auth::Auth;
     /// #[get("/display-me")]
     /// async fn display_me(auth: Auth<'_>) -> String {
     ///     format!("{:?}", auth.get_user().await)
@@ -213,7 +213,7 @@ impl<'a> Auth<'a> {
     /// Logs the currently authenticated user out.
     /// ```rust
     /// # use rocket::post;
-    /// # use rocket_auth::Auth;
+    /// # use rocket_username_auth::Auth;
     /// #[post("/logout")]
     /// fn logout(auth: Auth)  {
     ///     auth.logout();
@@ -223,12 +223,12 @@ impl<'a> Auth<'a> {
     pub fn logout(&self) {
         let session = self.get_session()?;
         self.users.logout(session)?;
-        self.cookies.remove_private(Cookie::named("rocket_auth"));
+        self.cookies.remove_private(Cookie::named("rocket_username_auth"));
     }
     /// Deletes the account of the currently authenticated user.
     /// ```rust
     /// # use rocket::post;
-    /// # use rocket_auth::Auth;
+    /// # use rocket_username_auth::Auth;
     /// #[post("/delete-my-account")]
     /// fn delete(auth: Auth)  {
     ///     auth.delete();
@@ -239,7 +239,7 @@ impl<'a> Auth<'a> {
         if self.is_auth() {
             let session = self.get_session()?;
             self.users.delete(session.id).await?;
-            self.cookies.remove_private(Cookie::named("rocket_auth"));
+            self.cookies.remove_private(Cookie::named("rocket_username_auth"));
         } else {
             throw!(Error::UnauthenticatedError)
         }
@@ -247,7 +247,7 @@ impl<'a> Auth<'a> {
 
     /// Changes the password of the currently authenticated user
     /// ```
-    /// # use rocket_auth::Auth;
+    /// # use rocket_username_auth::Auth;
     /// # use rocket::post;
     /// # #[post("/change")]
     /// # fn example(auth: Auth<'_>) {
@@ -268,7 +268,7 @@ impl<'a> Auth<'a> {
 
     /// Changes the email of the currently authenticated user
     /// ```
-    /// # use rocket_auth::Auth;
+    /// # use rocket_username_auth::Auth;
     /// # fn func(auth: Auth) {
     /// auth.change_email("new@email.com".into());
     /// # }
@@ -292,7 +292,7 @@ impl<'a> Auth<'a> {
     /// It is intended to be used primarily
     /// with the `?` operator.
     /// ```
-    /// # fn func(auth: rocket_auth::Auth) -> Result<(), rocket_auth::Error> {
+    /// # fn func(auth: rocket_username_auth::Auth) -> Result<(), rocket_username_auth::Error> {
     /// auth.get_session()?;
     /// # Ok(())
     /// # }

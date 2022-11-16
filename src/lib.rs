@@ -1,4 +1,4 @@
-//! rocket_auth provides a ready-to-use  backend agnostic API for authentication management.
+//! rocket_username_auth provides a ready-to-use  backend agnostic API for authentication management.
 //! It supports connections for SQLite and Postgresql. It lets you create, delete, and authenticate users.
 //! The available features are:
 //! * `sqlx-sqlite`: for interacting with a SQLite database using `sqlx`.
@@ -9,15 +9,15 @@
 //! * `tokio-postgres`: for interacting with a Postgresql database with `tokio-postgres`.
 //!
 //!
-//! `rocket_auth` uses private cookies to store session data.
+//! `rocket_username_auth` uses private cookies to store session data.
 //! This means that in order for cookies to be properly decrypted between launches, a `secret_key` must be set.
 //! For more information visit rocket's [configuration guide](https://rocket.rs/v0.5-rc/guide/configuration/#configuration).
 //!
 //!
 //!
-//! To use `rocket_auth` include it as a dependency in your Cargo.toml file:
+//! To use `rocket_username_auth` include it as a dependency in your Cargo.toml file:
 //! ```
-//! [dependencies.rocket_auth]
+//! [dependencies.rocket_username_auth]
 //! version = "0.4.0"
 //! features = ["sqlx-sqlite"]
 //! ```
@@ -45,7 +45,7 @@
 //!  A working example:
 //! ```rust,no_run
 //! use rocket::{get, post, form::Form, routes};
-//! use rocket_auth::{Users, Error, Auth, Signup, Login};
+//! use rocket_username_auth::{Users, Error, Auth, Signup, Login};
 //!
 //! #[post("/signup", data="<form>")]
 //! async fn signup(form: Form<Signup>, auth: Auth<'_>) -> Result<&'static str, Error> {
@@ -87,7 +87,7 @@
 //! ```rust
 //! # use rocket::{get, State};
 //! # use serde_json::json;
-//! use rocket_auth::Users;
+//! use rocket_username_auth::Users;
 //!
 //! #[get("/see-user/<id>")]
 //! async fn see_user(id: i32, users: &State<Users>) -> String {
@@ -106,7 +106,7 @@
 //! Additionally, you can use it to render special content if the client is authenticated or not.
 //! ```rust
 //! # use rocket::*;
-//! # use rocket_auth::User;
+//! # use rocket_username_auth::User;
 //! #[get("/private-content")]
 //! fn private_content(user: User) -> &'static str {
 //!     "If you can see this, you are logged in."
@@ -127,7 +127,7 @@
 //! It will restrict content, so that it can be viewed by admins only.
 //! ```
 //! # use rocket::*;
-//! # use rocket_auth::AdminUser;
+//! # use rocket_username_auth::AdminUser;
 //! #[get("/admin-panel")]
 //! fn admin_panel(user: AdminUser) -> String {
 //!    format!("Hello {}.", user.email())
@@ -159,7 +159,7 @@ pub use error::Error;
 /// ```rust
 /// #
 /// # use rocket::{get};
-/// # use rocket_auth::User;
+/// # use rocket_username_auth::User;
 /// #[get("/private-content")]
 /// fn private_content(user: User) -> &'static str {
 ///     "If you can see this, you are logged in."
@@ -180,7 +180,7 @@ pub struct User {
 /// It will restrict content, so that it can be viewed by admins only.
 /// ```
 /// # use rocket::*;
-/// # use rocket_auth::AdminUser;
+/// # use rocket_username_auth::AdminUser;
 /// #[get("/admin-panel")]
 /// fn admin_panel(user: AdminUser) -> String {
 ///    format!("Hello {}.", user.email())
