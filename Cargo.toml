@@ -1,11 +1,11 @@
 [package]
-name = "rocket_auth"
-version = "0.4.0"
+name = "rocket_username_auth"
+version = "0.5.0"
 authors = ["tvallotton@uc.cl"]
 edition = "2018"
 license = "MIT or Apache-2.0"
 description = "A high level authentication management library for Rocket applications. It supports both SQLite and Postgres."
-repository = "https://github.com/tvallotton/rocket_auth"
+repository = "https://github.com/yzernik/rocket_username_auth"
 
 readme = "README.md"
 categories = ["web-programming"]
@@ -95,8 +95,8 @@ features = ["tera"]
 version = "0.6.0"
 features = ["runtime-tokio-rustls"]
 
-[dev-dependencies.rocket_auth]
-path = "../rocket_auth"
+[dev-dependencies.rocket_username_auth]
+path = "../rocket_username_auth"
 features = [
     "sqlx-sqlite",
     "sqlx-postgres",

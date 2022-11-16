@@ -1,5 +1,5 @@
-# rocket_auth
-rocket_auth provides a ready-to-use  backend agnostic API for authentication management.
+# rocket_username_auth
+rocket_username_auth provides a ready-to-use  backend agnostic API for authentication management.
 It supports connections for SQLite and Postgresql. It lets you create, delete, and authenticate users.
 The available features are:
 * `sqlx-sqlite`: for interacting with a SQLite database using `sqlx`.
@@ -9,7 +9,7 @@ The available features are:
 * `rusqlite`: for interacting with a SQLite database using `rusqlite`.
 * `tokio-postgres`: for interacting with a Postgresql database with `tokio-postgres`.
 
-`rocket_auth` uses private cookies to store session data.
+`rocket_username_auth` uses private cookies to store session data.
 This means that in order for cookies to be properly decrypted between launches, a `secret_key` must be set.
 For more information visit rocket's [configuration guide](https://rocket.rs/v0.5-rc/guide/configuration/#configuration).
 
@@ -17,9 +17,9 @@ For more information visit rocket's [configuration guide](https://rocket.rs/v0.5
 
 
 
-To use `rocket_auth` include it as a dependency in your Cargo.toml file:
+To use `rocket_username_auth` include it as a dependency in your Cargo.toml file:
 ```ini
-[dependencies.rocket_auth]
+[dependencies.rocket_username_auth]
 version = "0.4.0"
 features = ["sqlx-sqlite"]
 ```
@@ -45,7 +45,7 @@ For more information see `Auth`.
  A working example:
 ```rust
 use rocket::{get, post, form::Form, routes};
-use rocket_auth::{Users, Error, Auth, Signup, Login};
+use rocket_username_auth::{Users, Error, Auth, Signup, Login};
 
 #[post("/signup", data="<form>")]
 async fn signup(form: Form<Signup>, auth: Auth<'_>) -> Result<&'static str, Error> {
@@ -85,7 +85,7 @@ So it is not necessary to retrieve Users when using `Auth`.
 A simple example of how to query a user with the `Users` struct:
 
 ```rust
-use rocket_auth::Users;
+use rocket_username_auth::Users;
 
 #[get("/see-user/<id>")]
 async fn see_user(id: i32, users: &State<Users>) -> String {
@@ -126,7 +126,7 @@ The `AdminUser` guard can be used analogously to `User`.
 It will restrict content, so that it can be viewed by admins only.
 ```rust
 # use rocket::*;
-# use rocket_auth::AdminUser;
+# use rocket_username_auth::AdminUser;
 #[get("/admin-panel")]
 fn admin_panel(user: AdminUser) -> String {
    format!("Hello {}.", user.email());

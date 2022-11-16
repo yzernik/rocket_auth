@@ -16,7 +16,7 @@ impl User {
     ///
     /// ```rust
     /// # use rocket::{State, post};
-    /// # use rocket_auth::{Error, Users};
+    /// # use rocket_username_auth::{Error, Users};
     /// #[post("/reset-password/<new_password>")]
     /// async fn reset_password(mut user: User, users: &State<Users>, new_password: String) -> Result<(), Error> {
     ///     user.set_password(&new_password);
@@ -38,7 +38,7 @@ impl User {
     /// This field is private, so that it is not modified by accident when updating a user.
     /// ```rust
     /// # use rocket::{State, get};
-    /// # use rocket_auth::{Error, User};
+    /// # use rocket_username_auth::{Error, User};
     /// #[get("/show-my-id")]
     /// fn show_my_id(user: User) -> String {
     ///     format!("Your user_id is: {}", user.id())
@@ -51,7 +51,7 @@ impl User {
     /// This field is private so an email cannot be updated without checking whether it is valid.
     /// ```rust
     /// # use rocket::{State, get};
-    /// # use rocket_auth::{Error, User};
+    /// # use rocket_username_auth::{Error, User};
     /// #[get("/show-my-email")]
     /// fn show_my_email(user: User) -> String {
     ///     format!("Your user_id is: {}", user.email())
@@ -66,7 +66,7 @@ impl User {
     /// In case the user corresponds to the authenticated client, it's easier to use [`Auth::change_email`].
     /// ```rust
     /// # use rocket::{State, get};
-    /// # use rocket_auth::{Error, Auth};
+    /// # use rocket_username_auth::{Error, Auth};
     /// #[get("/set-email/<email>")]
     /// async fn set_email(email: String, auth: Auth<'_>) -> Result<String, Error> {
     ///     let mut user = auth.get_user().await.unwrap();
