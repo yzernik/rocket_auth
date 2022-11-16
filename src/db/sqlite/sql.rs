@@ -1,6 +1,6 @@
 pub(crate) const CREATE_TABLE: &str = "
 CREATE TABLE IF NOT EXISTS users (
-    id INTEGER PRIMARY KEY,
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
     email TEXT UNIQUE,
     password TEXT NOT NULL,
     is_admin BOOL DEFAULT 0
